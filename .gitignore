@@ -1,0 +1,46 @@
+# Ignorar archivos multimedia pesados
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.mp4
+*.avi
+
+# Ignorar archivos temporales
+__pycache__/
+*.pyc
+*.log
+*.tmp
+.DS_Store
+Thumbs.db
+
+# Ignorar carpetas de salida (ajústalo según tu proyecto)
+*/output/
+*/results/
+*/temp/
+*/mapillary/
+
+# Archivos de datasets y modelos
+*.pt
+*.pth
+*.h5
+*.ckpt
+*.onnx
+*.weights
+
+# Carpetas de datos
+datasets/
+data/
+outputs/
+runs/
+checkpoints/
+
+# Archivos temporales
+*.log
+*.tmp
+*.zip
+*.tar
+*.gz
+
+# Jupyter checkpoints
+.ipynb_checkpoints/

@@ -1,0 +1,23 @@
+mIoU: 0.4131
+Precisión de píxeles: 0.8803
+
+IoU por clase:
+person: 0.6346
+rider: 0.1971
+car: 0.8031
+truck: 0.1913
+bus: 0.2780
+train: 0.0982
+motorcycle: 0.0842
+bicycle: 0.3287
+road: 0.9033
+sidewalk: 0.6356
+building: 0.7866
+wall: 0.1684
+fence: 0.1543
+pole: 0.1492
+traffic light: 0.1908
+traffic sign: 0.3752
+vegetation: 0.8104
+terrain: 0.2920
+sky: 0.7685

@@ -1,0 +1,9 @@
+python predict.py --input datasets/data/cityscapes/leftImg8bit/test/munich/munich_000376_000019_leftImg8bit.png  --dataset cityscapes --model deeplabv3plus_mobilenet --ckpt checkpoints/latest_deeplabv3plus_mobilenet_cityscapes_os16.pth --save_val_results_to test_results
+
+python visualizador_semantico.py --input datasets/data/cityscapes/leftImg8bit/train/bremen/bremen_000000_000019_leftImg8bit.png  --dataset cityscapes --model deeplabv3plus_mobilenet --ckpt checkpoints/best_deeplabv3plus_mobilenet_cityscapes_os16.pth
+
+python mainmapillary.py --dataset mapillary --data_root C:\Users\aaron\Documents\GitHub\DeepLabV3Plus-Pytorch\mapillary --mapillary_version v2.0 --model deeplabv3plus_mobilenet --output_stride 16 --total_itrs 10000 --lr 0.01 --crop_size 640 --batch_size 16 --enable_vis --vis_port 8097 --ckpt C:\Users\aaron\Documents\GitHub\DeepLabV3Plus-Pytorch\checkpoints\best_deeplabv3plus_mobilenet_mapillary_os16.pth
+
+python visualizador_semantico_map.py --input C:\Users\aaron\Documents\GitHub\DeepLabV3Plus-Pytorch\a.png  --dataset mapillary --model deeplabv3plus_mobilenet --ckpt checkpoints/best_deeplabv3plus_mobilenet_mapillary_os16.pth  --data_root C:\Users\aaron\Documents\GitHub\DeepLabV3Plus-Pytorch\mapillary
+
+python visualizador.py --input C:\Users\aaron\Documents\GitHub\DeepLabV3Plus-Pytorch\videoplayback.mp4  --dataset mapillary --model deeplabv3plus_mobilenet --ckpt checkpoints/best_deeplabv3plus_mobilenet_mapillary_os16.pth  --data_root C:\Users\aaron\Documents\GitHub\DeepLabV3Plus-Pytorch\mapillary

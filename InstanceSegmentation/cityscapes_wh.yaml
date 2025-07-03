@@ -1,0 +1,30 @@
+# cityscapes.yaml
+
+train: C:/Users/aaron/Documents/Año4/TFG/CityScapesWithPanopticSegm/dataset/images/train  # imágenes de entrenamiento
+val: C:/Users/aaron/Documents/Año4/TFG/CityScapesWithPanopticSegm/dataset/images/val      # imágenes de validación
+test: C:/Users/aaron/Documents/Año4/TFG/CityScapesWithPanopticSegm/dataset/images/test    # imágenes de prueba
+
+# Clases para segmentación panóptica
+#nc: 19  # número de clases
+#names: ['person', 'rider', 'car', 'truck', 'bus', 'train', 'motorcycle', 'bicycle',
+ #       'road', 'sidewalk', 'building', 'wall', 'fence', 'pole', 'traffic light',
+ #       'traffic sign', 'vegetation', 'terrain', 'sky']
+nc: 13
+names: ['person', 'rider', 'car', 'truck', 'bus', 'train', 'motorcycle', 'bicycle',
+        'road', 'sidewalk', 'building', 'pole', 'sky']
+
+# Añadir pesos de clases (mayor peso = más importancia)
+class_weights:
+  0: 2.0    # person (doble importancia)
+  2: 1.5    # car (1.5x importancia)
+  8: 2.0    # road (doble importancia)
+  9: 2.0    # sidewalk (doble importancia)
+  1: 0.8    # rider (reducir importancia)
+  3: 0.8    # truck
+  4: 0.8    # bus
+  5: 0.8    # train
+  6: 0.8    # motorcycle
+  7: 0.8    # bicycle
+  10: 0.7   # building
+  11: 0.7   # pole
+  12: 0.7   # sky

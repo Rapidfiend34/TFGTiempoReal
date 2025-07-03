@@ -1,0 +1,31 @@
+# cityscapes.yaml
+
+train: C:/Users/aaron/Documents/Año4/TFG/CityScapesWithPanopticSegm/Mapillary_dataset_instance/train/images  # imágenes de entrenamiento
+val: C:/Users/aaron/Documents/Año4/TFG/CityScapesWithPanopticSegm/Mapillary_dataset_instance/val/images      # imágenes de validación
+test: C:/Users/aaron/Documents/Año4/TFG/CityScapesWithPanopticSegm/Mapillary_dataset_instance/test/images    # imágenes de prueba
+
+# Clases para segmentación panóptica
+#nc: 19  # número de clases
+#names: ['person', 'rider', 'car', 'truck', 'bus', 'train', 'motorcycle', 'bicycle',
+ #       'road', 'sidewalk', 'building', 'wall', 'fence', 'pole', 'traffic light',
+ #       'traffic sign', 'vegetation', 'terrain', 'sky']
+nc: 14
+names:
+  [road,
+  sidewalk
+  ,person
+  ,rider
+  ,sky
+  ,pole
+  ,bicycle
+  , bus
+  , car
+  , motorcycle
+  , train
+  , trailer
+  , truck
+  , unlabeled]
+
+
+# nc: 1
+# names: ['person']

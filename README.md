@@ -1,5 +1,5 @@
 # TFGTiempoReal
-TFG sobre detección a tiempo real de peatones utilizando modelo panóptico y clasificando la spersonas por vulnerabilidades
+TFG sobre detección a tiempo real de peatones utilizando modelo panóptico y clasificando la spersonas por vulnerabilidades.
 
 Los pesos y configuraciones utilizadas no han sido añadidas en el repositorio, en caso de querer obtenerlas se debe solicitar permiso al autor.
 

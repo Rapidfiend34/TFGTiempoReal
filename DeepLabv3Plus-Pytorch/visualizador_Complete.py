@@ -141,7 +141,7 @@ class AsyncPipeline:
         
         # Iniciar workers
         self._start_workers()
-        print("🚀 Pipeline asíncrono iniciado con {} workers".format(max_workers))
+        print(" Pipeline asíncrono iniciado con {} workers".format(max_workers))
     
     def _start_workers(self):
         """Iniciar todos los workers del pipeline"""
@@ -158,11 +158,11 @@ class AsyncPipeline:
         # Worker para visualización
         threading.Thread(target=self._visualization_worker, daemon=True, name="VisualizationWorker").start()
         
-        print("✅ Todos los workers del pipeline iniciados")
+        print(" Todos los workers del pipeline iniciados")
     
     def _semantic_worker(self):
         """Worker dedicado para segmentación semántica"""
-        print("🧠 Semantic worker iniciado")
+        print(" Semantic worker iniciado")
         
         while self.running:
             try:
@@ -215,7 +215,7 @@ class AsyncPipeline:
                     self.semantic_queue.put_nowait(frame_data)
                 except queue.Full:
                     self.stats['frames_dropped'] += 1
-                    print("⚠️ Frame dropped en semantic queue")
+                    print(" Frame dropped en semantic queue")
                 
                 # Actualizar estadísticas
                 self.stats['stage_times']['semantic'].append(frame_data.processing_times['semantic'])
@@ -223,13 +223,13 @@ class AsyncPipeline:
             except queue.Empty:
                 continue
             except Exception as e:
-                print(f"❌ Error en semantic worker: {e}")
+                print(f" Error en semantic worker: {e}")
         
-        print("🛑 Semantic worker terminado")
+        print(" Semantic worker terminado")
     
     def _detection_worker(self):
         """Worker dedicado para detección YOLO"""
-        print("🎯 Detection worker iniciado")
+        print(" Detection worker iniciado")
         
         while self.running:
             try:
@@ -273,7 +273,7 @@ class AsyncPipeline:
                     self.detection_queue.put_nowait(frame_data)
                 except queue.Full:
                     self.stats['frames_dropped'] += 1
-                    print("⚠️ Frame dropped en detection queue")
+                    print(" Frame dropped en detection queue")
                 
                 # Actualizar estadísticas
                 self.stats['stage_times']['detection'].append(frame_data.processing_times['detection'])
@@ -281,13 +281,13 @@ class AsyncPipeline:
             except queue.Empty:
                 continue
             except Exception as e:
-                print(f"❌ Error en detection worker: {e}")
+                print(f" Error en detection worker: {e}")
         
-        print("🛑 Detection worker terminado")
+        print(" Detection worker terminado")
     
     def _classification_worker(self):
         """Worker dedicado para clasificación"""
-        print("🏷️ Classification worker iniciado")
+        print("🏷 Classification worker iniciado")
         
         while self.running:
             try:
@@ -346,7 +346,7 @@ class AsyncPipeline:
                     self.classification_queue.put_nowait(frame_data)
                 except queue.Full:
                     self.stats['frames_dropped'] += 1
-                    print("⚠️ Frame dropped en classification queue")
+                    print(" Frame dropped en classification queue")
                 
                 # Actualizar estadísticas
                 self.stats['stage_times']['classification'].append(frame_data.processing_times['classification'])
@@ -354,13 +354,13 @@ class AsyncPipeline:
             except queue.Empty:
                 continue
             except Exception as e:
-                print(f"❌ Error en classification worker: {e}")
+                print(f" Error en classification worker: {e}")
         
-        print("🛑 Classification worker terminado")
+        print(" Classification worker terminado")
     
     def _visualization_worker(self):
         """Worker dedicado para crear visualizaciones"""
-        print("🎨 Visualization worker iniciado")
+        print(" Visualization worker iniciado")
         
         # Variables para cálculo correcto de FPS
         last_display_time = time.time()
@@ -388,7 +388,7 @@ class AsyncPipeline:
                     frame_data.classifications
                 )
                 
-                # 🎯 CÁLCULO CORRECTO DE FPS
+                #  Cálculo correcto FPS
                 current_time = time.time()
                 display_fps = 1.0 / (current_time - last_display_time) if last_display_time else 0
                 fps_history.append(display_fps)
@@ -428,7 +428,7 @@ class AsyncPipeline:
                     self.stats['frames_processed'] += 1
                 except queue.Full:
                     self.stats['frames_dropped'] += 1
-                    print("⚠️ Frame dropped en output queue")
+                    print(" Frame dropped en output queue")
                 
                 # Actualizar estadísticas
                 self.stats['stage_times']['visualization'].append(frame_data.processing_times['visualization'])
@@ -436,9 +436,9 @@ class AsyncPipeline:
             except queue.Empty:
                 continue
             except Exception as e:
-                print(f"❌ Error en visualization worker: {e}")
+                print(f" Error en visualization worker: {e}")
         
-        print("🛑 Visualization worker terminado")
+        print(" Visualization worker terminado")
     
     def add_frame(self, frame, frame_id, rotation_angle=0):
         """Añadir frame al pipeline"""
@@ -490,12 +490,12 @@ class AsyncPipeline:
     def pause(self):
         """Pausar pipeline"""
         self.paused = True
-        print("⏸️ Pipeline pausado")
+        print(" Pipeline pausado")
     
     def resume(self):
         """Reanudar pipeline"""
         self.paused = False
-        print("▶️ Pipeline reanudado")
+        print(" Pipeline reanudado")
     
     def toggle_pause(self):
         """Alternar pausa"""
@@ -506,7 +506,7 @@ class AsyncPipeline:
     
     def shutdown(self):
         """Cerrar pipeline de forma segura"""
-        print("🔄 Cerrando pipeline asíncrono...")
+        print(" Cerrando pipeline asíncrono...")
         self.running = False
         
         # Enviar señales de parada a todas las colas
@@ -525,7 +525,7 @@ class AsyncPipeline:
         self.classification_executor.shutdown(wait=True)
         self.visualization_executor.shutdown(wait=True)
         
-        print("✅ Pipeline cerrado correctamente")
+        print(" Pipeline cerrado correctamente")
 
 def create_opencv_visualization(frame_rgb, color_mask, combined_viz):
     """Visualización con OpenCV en lugar de matplotlib"""
@@ -651,9 +651,9 @@ def load_model(opts, device):
                 new_state_dict[name] = v
 
             model.load_state_dict(new_state_dict)
-            print("✅ Checkpoint cargado exitosamente")
+            print(" Checkpoint cargado exitosamente")
         except Exception as e:
-            print(f"❌ Error al cargar checkpoint: {e}")
+            print(f" Error al cargar checkpoint: {e}")
             raise
 
     model = model.to(device)
@@ -738,18 +738,18 @@ def main():
     frame_count = 0
     rotation_angle = 0
     
-    print("🚀 === Sistema con Pipeline Asíncrono ===")
+    print(" === Sistema con Pipeline Asíncrono ===")
     
     # Verificar CUDA
     if torch.cuda.is_available():
-        print(f"✅ Using CUDA device: {torch.cuda.get_device_name(0)}")
+        print(f" Using CUDA device: {torch.cuda.get_device_name(0)}")
     else:
-        print("⚠️ CUDA not available, using CPU")
+        print(" CUDA not available, using CPU")
 
     # Configurar dispositivo
     os.environ['CUDA_VISIBLE_DEVICES'] = opts.gpu_id
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    print(f"🔧 Using device: {device}")
+    print(f" Using device: {device}")
     torch.backends.cudnn.benchmark = True
     torch.backends.cudnn.deterministic = False
 
@@ -760,21 +760,21 @@ def main():
     
     # Cargar modelos
     try:
-        print("📥 Cargando modelos...")
+        print(" Cargando modelos...")
         yolo_model = YOLO('yolov8n-seg.pt', verbose=False)
         classifier_model = YOLO(r'C:\\Users\\aaron\\Documents\\Año4\\TFG\\Classifier\\runs\\classify\\Mejores_matrix\\weights\\best.pt', verbose=False)
         yolo_model.to(device).half()
         classifier_model.to(device).half()
-        print("✅ Modelos YOLO cargados correctamente")
+        print(" Modelos YOLO cargados correctamente")
     except Exception as e:
-        print(f"❌ Error loading models: {e}")
+        print(f" Error loading models: {e}")
         return
 
     # Cargar modelo DeepLab
-    print("📥 Cargando modelo DeepLab...")
+    print(" Cargando modelo DeepLab...")
     model, opts = load_model(opts, device)
     model.eval()
-    print("✅ Modelo DeepLab cargado correctamente")
+    print(" Modelo DeepLab cargado correctamente")
 
     # Configurar transformaciones
     transform = T.Compose([
@@ -789,38 +789,38 @@ def main():
             cap = cv2.VideoCapture(0)
             cap.set(cv2.CAP_PROP_FRAME_WIDTH, INPUT_RESOLUTION[0])
             cap.set(cv2.CAP_PROP_FRAME_HEIGHT, INPUT_RESOLUTION[1])
-            print("✅ Cámara iniciada correctamente")
+            print(" Cámara iniciada correctamente")
         except Exception as e:
-            print(f"❌ Error al abrir la cámara: {e}")
+            print(f" Error al abrir la cámara: {e}")
             return
     else:
         try:
             cap = cv2.VideoCapture(opts.input)
             if not cap.isOpened():
-                print("❌ Error: No se pudo abrir el video")
+                print(" Error: No se pudo abrir el video")
                 return
-            print("✅ Video cargado correctamente")
+            print(" Video cargado correctamente")
             
             # Detectar rotación del video
             if opts.force_rotation is not None:
                 rotation_angle = opts.force_rotation
-                print(f"🔄 Rotación forzada: {rotation_angle}°")
+                print(f" Rotación forzada: {rotation_angle}°")
             elif opts.auto_rotate:
                 video_rotation = get_video_rotation(opts.input)
                 if video_rotation != 0:
                     rotation_angle = video_rotation
-                    print(f"🔄 Rotación detectada por metadatos: {rotation_angle}°")
+                    print(f" Rotación detectada por metadatos: {rotation_angle}°")
                 else:
                     is_vertical = detect_video_orientation(cap)
                     if is_vertical:
                         rotation_angle = 0
-                        print("📱 Video vertical detectado - manteniendo orientación original")
+                        print(" Video vertical detectado - manteniendo orientación original")
                     else:
                         rotation_angle = 0
-                        print("🖥️ Video horizontal detectado")
+                        print(" Video horizontal detectado")
             
         except Exception as e:
-            print(f"❌ Error al abrir el video: {e}")
+            print(f" Error al abrir el video: {e}")
             return
 
     # Obtener dimensiones del frame
@@ -834,11 +834,11 @@ def main():
         frame_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
         frame_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
-    print(f"📐 Dimensiones del frame: {frame_width}x{frame_height}")
+    print(f" Dimensiones del frame: {frame_width}x{frame_height}")
 
     # Configurar FPS
     fps = 30 if opts.input_type == 'camera' else int(cap.get(cv2.CAP_PROP_FPS))
-    print(f"🎬 FPS configurado: {fps}")
+    print(f" FPS configurado: {fps}")
 
     # Configurar writer para guardar video
     if opts.save_video:
@@ -847,14 +847,14 @@ def main():
                                  f'output_async_{opts.input_type}_{time.strftime("%Y%m%d_%H%M%S")}.mp4')
         fourcc = cv2.VideoWriter_fourcc(*'mp4v')
         out = cv2.VideoWriter(output_path, fourcc, fps, (frame_width*3, frame_height))
-        print(f"💾 Video se guardará en: {output_path}")
+        print(f" Video se guardará en: {output_path}")
 
     # Inicializar procesador semántico
     semantic_processor = SemanticValidationPostProcessor(
         min_semantic_consistency=0.0
     )
     
-    # 🚀 INICIALIZAR PIPELINE ASÍNCRONO
+    #  Inicializar pipeline asícnrono
     if opts.use_async_pipeline:
         pipeline = AsyncPipeline(
             model=model,
@@ -866,7 +866,7 @@ def main():
             max_workers=opts.pipeline_workers,
             buffer_size=opts.pipeline_buffer
         )
-        print(f"🚀 Pipeline asíncrono iniciado con {opts.pipeline_workers} workers")
+        print(f" Pipeline asíncrono iniciado con {opts.pipeline_workers} workers")
     
     # Variables para estadísticas
     detection_stats = {
@@ -882,7 +882,7 @@ def main():
     cv2.namedWindow('Async Video Processing', cv2.WINDOW_NORMAL)
     cv2.resizeWindow('Async Video Processing', 1440, 360)
     
-    print("🚀 Iniciando procesamiento con pipeline asíncrono...")
+    print(" Iniciando procesamiento con pipeline asíncrono...")
     
     try:
         frame_start_time = time.time()
@@ -892,7 +892,7 @@ def main():
             
             ret, frame = cap.read()
             if not ret:
-                print("📹 Fin del video o error de lectura")
+                print(" Fin del video o error de lectura")
                 break
 
             frame_count += 1
@@ -901,13 +901,13 @@ def main():
             if frame_count % PROCESS_EVERY_N_FRAMES != 0:
                 continue
 
-            # 🚀 AÑADIR FRAME AL PIPELINE ASÍNCRONO
+            #  AÑADIR FRAME AL PIPELINE ASÍNCRONO
             if opts.use_async_pipeline:
                 success = pipeline.add_frame(frame, frame_count, rotation_angle)
                 if not success:
-                    print("⚠️ Frame descartado - pipeline lleno")
+                    print(" Frame descartado - pipeline lleno")
                 
-                # 🎯 OBTENER RESULTADO PROCESADO
+                #  OBTENER RESULTADO PROCESADO
                 result = pipeline.get_result(timeout=0.01)  # Non-blocking
                 
                 if result is not None:
@@ -952,20 +952,20 @@ def main():
             # Controles de teclado
             key = cv2.waitKey(1) & 0xFF
             if key == ord('q'):
-                print("🛑 Saliendo del sistema...")
+                print(" Saliendo del sistema...")
                 break
             elif key == ord('s'):
                 timestamp = time.strftime("%Y%m%d_%H%M%S")
                 if 'result' in locals() and result is not None and result.visualization is not None:
                     filename = f'capture_async_{timestamp}.jpg'
                     cv2.imwrite(filename, result.visualization)
-                    print(f"📸 Captura guardada: {filename}")
+                    print(f" Captura guardada: {filename}")
             elif key == ord('p'):
                 if opts.use_async_pipeline:
                     pipeline.toggle_pause()
             elif key == ord('r'):
                 rotation_angle = (rotation_angle + 90) % 360
-                print(f"🔄 Rotación cambiada a: {rotation_angle}°")
+                print(f" Rotación cambiada a: {rotation_angle}°")
             elif key == ord('f'):
                 cv2.setWindowProperty('Async Video Processing', cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
             elif key == ord('n'):
@@ -985,13 +985,13 @@ def main():
                           f"Latency: {pipeline_stats['total_latency']*1000:.1f}ms")
 
     except KeyboardInterrupt:
-        print("🛑 Interrupción por teclado (Ctrl+C)")
+        print(" Interrupción por teclado (Ctrl+C)")
     except Exception as e:
-        print(f"❌ Error durante la ejecución: {e}")
+        print(f" Error durante la ejecución: {e}")
         import traceback
         traceback.print_exc()
     finally:
-        print("🔄 Cerrando sistema...")
+        print(" Cerrando sistema...")
         
         # Cerrar pipeline asíncrono
         if opts.use_async_pipeline:
@@ -999,42 +999,42 @@ def main():
         
         # Mostrar estadísticas finales
         print("\n" + "="*60)
-        print("📊 ESTADÍSTICAS FINALES DEL PIPELINE ASÍNCRONO")
+        print(" ESTADÍSTICAS FINALES DEL PIPELINE ASÍNCRONO")
         print("="*60)
-        print(f"📹 Total frames leídos: {frame_count}")
+        print(f" Total frames leídos: {frame_count}")
         
         if opts.use_async_pipeline:
             final_stats = pipeline.get_stats()
-            print(f"🎯 Frames procesados: {final_stats['frames_processed']}")
-            print(f"❌ Frames descartados: {final_stats['frames_dropped']}")
-            print(f"⚡ Latencia promedio: {final_stats['total_latency']*1000:.1f}ms")
+            print(f" Frames procesados: {final_stats['frames_processed']}")
+            print(f" Frames descartados: {final_stats['frames_dropped']}")
+            print(f" Latencia promedio: {final_stats['total_latency']*1000:.1f}ms")
             
-            print(f"\n🔧 Tiempos promedio por etapa:")
+            print(f"\n Tiempos promedio por etapa:")
             for stage, time_ms in final_stats['avg_times'].items():
                 print(f"   - {stage.capitalize()}: {time_ms*1000:.1f}ms")
             
             efficiency = (final_stats['frames_processed'] / max(1, frame_count)) * 100
-            print(f"\n📈 Eficiencia del pipeline: {efficiency:.1f}%")
+            print(f"\n Eficiencia del pipeline: {efficiency:.1f}%")
         
-        print(f"🎯 Total detecciones válidas: {detection_stats['valid_detections']}")
-        print(f"🔄 Rotación final aplicada: {rotation_angle}°")
+        print(f" Total detecciones válidas: {detection_stats['valid_detections']}")
+        print(f" Rotación final aplicada: {rotation_angle}°")
         print("="*60)
 
         # Liberar recursos
         cap.release()
         if 'out' in locals() and opts.save_video:
             out.release()
-            print(f"💾 Video guardado correctamente")
+            print(f" Video guardado correctamente")
         cv2.destroyAllWindows()
 
 if __name__ == '__main__':
-    print("🎮 CONTROLES DEL SISTEMA ASÍNCRONO:")
+    print("CONTROLES DEL SISTEMA ASÍNCRONO:")
     print("  'q' - Salir del sistema")
     print("  's' - Capturar frame actual")
     print("  'p' - Pausar/Reanudar pipeline")
     print("  'r' - Cambiar rotación manualmente (+90°)")
     print("  'f' - Alternar pantalla completa")
     print("  'n' - Volver a ventana normal")
-    print("\n🚀 Sistema con Pipeline Asíncrono de Alto Rendimiento")
+    print("\n Sistema con Pipeline Asíncrono de Alto Rendimiento")
     print("="*60)
     main()
